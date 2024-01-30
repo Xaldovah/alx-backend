@@ -17,20 +17,24 @@ class LFUCache(BaseCaching):
         if key is not None and item is not None:
             if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
                 min_frequency = min(self.frequency_count.values())
-                least_frequent_keys = [k for k, v in self.frequency_count.items() if v == min_frequency]
+                least_frequent_keys = [
+                        k for k, v in self.frequency_count.items(
+                            ) if v == min_frequency]
                 if len(least_frequent_keys) > 1:
-                    discarded_key = min(self.cache_data, key=lambda k: self.cache_data[k][1])
+                    discarded_key = min(
+                            self.cache_data,
+                            key=lambda k: self.frequency_count[k])
                 else:
                     discarded_key = least_frequent_keys[0]
                 del self.cache_data[discarded_key]
                 del self.frequency_count[discarded_key]
                 print(f"DISCARD: {discarded_key}")
-            self.cache_data[key] = item, 0
+            self.cache_data[key] = item
             self.frequency_count[key] = 0
 
     def get(self, key):
         """Retrieves an item from the cache"""
         if key is not None and key in self.cache_data:
             self.frequency_count[key] += 1
-            return self.cache_data[key][0]
+            return self.cache_data[key]
         return None
