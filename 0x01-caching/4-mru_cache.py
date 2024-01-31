@@ -16,7 +16,7 @@ class MRUCache(BaseCaching):
         """Adds an item to the cache using MRU algorithm"""
         if key is None or item is None:
             return
-        
+
         if key in self.cache_data:
             self.usage_order.remove(key)
 
@@ -24,9 +24,9 @@ class MRUCache(BaseCaching):
         self.usage_order.append(key)
 
         if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-                discarded_key = self.usage_order.pop(0)
-                del self.cache_data[discarded_key]
-                print(f"DISCARD: {discarded_key}")
+            discarded_key = self.usage_order.pop(0)
+            del self.cache_data[discarded_key]
+            print(f"DISCARD: {discarded_key}")
 
     def get(self, key):
         """Retrieves an item from the cache"""
