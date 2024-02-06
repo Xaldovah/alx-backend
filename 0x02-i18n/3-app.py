@@ -24,7 +24,13 @@ app.config.from_object(Config)
 def get_locale():
     """This function gets the locale of the client and returns
     content with their preferred language"""
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
+    accepted_languages = request.accept_languages
+
+    for lang, _ in accepted_languages:
+        if lang in app.config['LANGUAGES']:
+            return lang
+
+    return app.config['BABEL_DEFAULT_LOCALE']
 
 
 babel.init_app(app, locale_selector=get_locale)
