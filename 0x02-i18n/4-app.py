@@ -20,7 +20,6 @@ class Config:
 app.config.from_object(Config)
 
 
-@babel.localeselector
 def get_locale():
     """This function gets the locale of the client and returns
     content with their preferred language"""
@@ -38,7 +37,7 @@ babel.init_app(app, locale_selector=get_locale)
 def hello():
     """Render the index.html template.
     """
-    return render_template('3-index.html')
+    return render_template('4-index.html')
 
 
 if __name__ == '__main__':
