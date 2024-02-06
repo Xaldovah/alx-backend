@@ -5,6 +5,7 @@ from flask import Flask, render_template, request
 from flask_babel import Babel, get_locale
 
 
+@babel.localeselector
 def get_locale():
     """This function gets the locale of the client and returns
     content with their preferred language"""
