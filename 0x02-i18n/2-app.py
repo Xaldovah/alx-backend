@@ -20,13 +20,7 @@ app.config.from_object(Config)
 def get_locale():
     """This function gets the locale of the client and returns
     content with their preferred language"""
-    accepted_languages = request.accept_languages
-
-    for lang, _ in accepted_languages:
-        if lang in app.config['LANGUAGES']:
-            return lang
-
-    return app.config['BABEL_DEFAULT_LOCALE']
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
 app = Flask(__name__)
