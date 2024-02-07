@@ -4,6 +4,8 @@
 from flask import Flask, render_template, request
 from flask_babel import Babel, get_locale, _
 
+app = Flask(__name__)
+
 
 class Config:
     """This class provides the configuration of languages and timezone
@@ -23,7 +25,6 @@ def get_locale():
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
-app = Flask(__name__)
 babel = Babel(app, locale_selector=get_locale)
 
 
