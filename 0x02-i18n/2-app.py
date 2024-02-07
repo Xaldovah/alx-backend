@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""This module function creates a basic flask app"""
+"""This module function creates a basic flask"""
 
 from flask import Flask, render_template, request
 from flask_babel import Babel, get_locale, _
