@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""This module function creates a basic flask"""
+"""
+This module function creates a flask application that translates
+languages
+"""
 
 from flask import Flask, render_template, request
 from flask_babel import Babel, get_locale, _
@@ -18,6 +21,7 @@ class Config:
 app.config.from_object(Config)
 
 
+@babel.localeselector
 def get_locale():
     """This function gets the locale of the client and returns
     content with their preferred language"""
