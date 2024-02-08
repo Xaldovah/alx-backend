@@ -120,7 +120,9 @@ def get_timezone():
 def hello():
     """Render the index.html template with the current time
     """
-    return render_template('7-index.html')
+    current_time = datetime.now(pytz.timezone(get_timezone()))
+    formatted_time = format_datetime(current_time, format='medium')
+    return render_template('7-index.html', current_time=formatted_time)
 
 
 if __name__ == '__main__':
