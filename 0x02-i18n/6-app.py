@@ -44,16 +44,35 @@ def before_request():
 
 
 def get_locale():
-    """This function gets the locale of the client and returns
-    content with their preferred language"""
-    locale = request.args.get('locale')
-    if locale and locale in app.config['LANGUAGES']:
-        return locale
+    """
+    Get the preferred locale for the user.
 
-    accepted_languages = request.accept_languages
-    for lang, _ in accepted_languages:
-        if lang in app.config['LANGUAGES']:
-            return lang
+    The order of priority is:
+        1. Locale from URL parameters
+        2. Locale from user settings
+        3. Locale from request header
+        4. Default locale
+
+    Returns:
+        str: The preferred locale for the user.
+    """
+    # Check if locale is provided in URL parameters
+    param = request.args.get('locale')
+    if param and param in app.config['LANGUAGES']:
+        return param
+
+    # Check if user is logged in and has a preferred locale
+    if g.user and 'locale' in g.user and g.user[
+            'locale'] in app.config['LANGUAGES']:
+        return g.user['locale']
+
+    # Check request header for preffered locale
+    header_locale = request.headers.get('Accept-Language')
+    if header_locale:
+        for lang in header_locale.split(','):
+            lang = lang.split(';')[0].strip()
+            if lang in app.config['LANGUAGES']:
+                return lang
 
     return app.config['BABEL_DEFAULT_LOCALE']
 
@@ -62,7 +81,7 @@ def get_locale():
 def hello():
     """Render the index.html template.
     """
-    return render_template('5-index.html')
+    return render_template('6-index.html')
 
 
 if __name__ == '__main__':
