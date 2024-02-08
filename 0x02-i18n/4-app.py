@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""This module function creates a basic flask app"""
+"""
+This module function creates a basic flask app and uses flask_babel to set
+locale
+"""
 
 from flask import Flask, render_template, request
 from flask_babel import Babel, get_locale
@@ -7,7 +10,7 @@ from flask_babel import gettext as _
 
 
 app = Flask(__name__)
-babel = Babel()
+babel = Babel(app)
 
 
 class Config:
@@ -20,7 +23,6 @@ class Config:
 app.config.from_object(Config)
 
 
-@babel.localeselector
 def get_locale():
     """This function gets the locale of the client and returns
     content with their preferred language"""
@@ -34,9 +36,6 @@ def get_locale():
             return lang
 
     return app.config['BABEL_DEFAULT_LOCALE']
-
-
-babel.init_app(app, locale_selector=get_locale)
 
 
 @app.route('/', methods=['GET'])
