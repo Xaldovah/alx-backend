@@ -8,6 +8,7 @@ from flask import Flask, render_template, request
 from flask_babel import Babel, get_locale, _
 
 app = Flask(__name__)
+babel = Babel(app)
 
 
 class Config:
@@ -26,9 +27,6 @@ def get_locale():
     """This function gets the locale of the client and returns
     content with their preferred language"""
     return request.accept_languages.best_match(app.config['LANGUAGES'])
-
-
-babel = Babel(app, locale_selector=get_locale)
 
 
 @app.route('/', methods=['GET'])
