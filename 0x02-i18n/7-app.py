@@ -111,6 +111,7 @@ def get_tmz():
     return 'UTC'
 
 
+@babel.timezoneselector
 def get_timezone():
     """Get the appropriate time zone for the user."""
     return get_tmz()
