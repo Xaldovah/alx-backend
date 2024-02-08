@@ -7,7 +7,7 @@ from flask_babel import gettext as _
 
 
 app = Flask(__name__)
-babel = Babel()
+babel = Babel(app)
 
 
 class Config:
@@ -20,7 +20,6 @@ class Config:
 app.config.from_object(Config)
 
 
-@babel.localeselector
 def get_locale():
     """This function gets the locale of the client and returns
     content with their preferred language"""
@@ -31,9 +30,6 @@ def get_locale():
             return lang
 
     return app.config['BABEL_DEFAULT_LOCALE']
-
-
-babel.init_app(app, locale_selector=get_locale)
 
 
 @app.route('/', methods=['GET'])
